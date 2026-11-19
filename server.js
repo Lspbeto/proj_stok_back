@@ -4,9 +4,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const cors = require("cors"); // <--- Adicione esta linha
 
-const { MONGODB_URI, JWT_SECRET, PORT = 3000 } = process.env;
-if (!MONGODB_URI || !JWT_SECRET) {
+const { MONGO_URI, JWT_SECRET, PORT = 3000 } = process.env;
+if (!MONGO_URI || !JWT_SECRET) {
   console.error("Defina MONGODB_URI e JWT_SECRET no arquivo .env (veja .env.example).");
   process.exit(1);
 }
@@ -19,7 +20,7 @@ app.use(express.static(path.join(__dirname, "..", "stok_int_front/")));
 
 // ---------- Início ----------
 mongoose
-  .connect(MONGODB_URI)
+  .connect(MONGO_URI)
   .then(() => {
     console.log("Conectado ao MongoDB.");
   })
